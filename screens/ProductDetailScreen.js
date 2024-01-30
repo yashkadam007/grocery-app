@@ -7,6 +7,7 @@ import {
   StyleSheet,
   FlatList,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
 import ActionButton from "../components/ActionButton";
 import { theme } from "../themes/theme";
@@ -16,11 +17,20 @@ import Cart from "../components/Cart";
 import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/action/Actions";
+import Carousel, { Pagination } from "react-native-snap-carousel";
+
+
+const { width } = Dimensions.get('window');
 
 const ProductDetailScreen = ({ route, cartItems }) => {
   const { productId } = route.params;
   const [productDetails, setProductDetails] = useState(null);
   const dispatch = useDispatch();
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const renderImageItem = ({ item }) => (
+    <Image source={{ uri: item }} style={{ width, height: 200, resizeMode: 'cover' }} />
+  );
 
   const handleAddToCart = () => {
     const existingCartItem = cartItems.find((item) => item.id === productId);
@@ -33,6 +43,7 @@ const ProductDetailScreen = ({ route, cartItems }) => {
           title: productDetails.title,
           price: productDetails.price,
           quantity: 1,
+          thumbnail: productDetails.thumbnail,
         })
       );
     }
@@ -50,7 +61,7 @@ const ProductDetailScreen = ({ route, cartItems }) => {
 
   if (!productDetails) {
     // Loading state or error handling can be added here
-    return <Text>Loading...</Text>;
+    return <Text style={styles.loading}>Loading...</Text>;
   }
 
   return (
@@ -61,10 +72,10 @@ const ProductDetailScreen = ({ route, cartItems }) => {
       </View>
 
       <ScrollView style={styles.container}>
-        <Text style={styles.title}>{productDetails.title}</Text>
         <Text style={styles.brand}>{productDetails.brand}</Text>
-        <Text style={styles.rating}>Rating: {productDetails.rating}</Text>
-        <FlatList
+        <Text style={styles.title}>{productDetails.title}</Text>
+        {/* <Text style={styles.rating}>Rating: {productDetails.rating}</Text> */}
+        {/* <FlatList
           data={productDetails.images}
           keyExtractor={(item, index) => index.toString()}
           horizontal
@@ -72,9 +83,33 @@ const ProductDetailScreen = ({ route, cartItems }) => {
           renderItem={({ item }) => (
             <Image source={{ uri: item }} style={styles.image} />
           )}
-        />
+        /> */}
+        <View>
+      <Carousel
+        data={productDetails.images}
+        renderItem={renderImageItem}
+        sliderWidth={width}
+        itemWidth={width}
+        onSnapToItem={(index) => setActiveSlide(index)}
+      />
+      <Pagination
+        dotsLength={productDetails.images.length}
+        activeDotIndex={activeSlide}
+        containerStyle={{ position: 'absolute', bottom: -15 }}
+        dotStyle={{
+          width: 21,
+          height: 4,
+          borderRadius: 5,
+          marginHorizontal: 1,
+          backgroundColor: theme.colors.secondaryDark,
+        }}
+        inactiveDotOpacity={0.4}
+        inactiveDotScale={1}
+        inactiveDotStyle={{ backgroundColor: '#E4E4E4'}}
+      />
+    </View>
 
-        <Text style={styles.price}>Price: ${productDetails.price}</Text>
+        <Text style={styles.price}>${productDetails.price}</Text>
         <View style={styles.buttonContainer}>
           <ActionButton
             text="Add to cart"
@@ -88,9 +123,10 @@ const ProductDetailScreen = ({ route, cartItems }) => {
           />
         </View>
 
-        <Text style={styles.discount}>
+        {/* <Text style={styles.discount}>
           Discount: {productDetails.discountPercentage}%
-        </Text>
+        </Text> */}
+        <Text style={styles.detail}>Detail</Text>
         <Text style={styles.description}>{productDetails.description}</Text>
       </ScrollView>
     </SafeAreaView>
@@ -105,7 +141,7 @@ const addToCartButtonStyle = {
     borderWidth: 1,
     paddingHorizontal: 12,
     paddingVertical: 18,
-    marginTop: 24,
+    //marginTop: 24,
   },
   buttonText: {
     color: theme.colors.primary,
@@ -121,7 +157,7 @@ const buyNowButtonStyle = {
     backgroundColor: theme.colors.primary,
     paddingHorizontal: 12,
     paddingVertical: 18,
-    marginTop: 24,
+    //marginTop: 24,
   },
   buttonText: {
     color: theme.colors.background,
@@ -133,22 +169,28 @@ const buyNowButtonStyle = {
 };
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    //padding: 16,
   },
   backAndCart: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    paddingHorizontal: 20,
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: 50,
+    color: "#1e222b",
+    fontFamily: theme.textVariants.bold,
     marginBottom: 8,
+    paddingHorizontal: 16,
   },
   brand: {
-    fontSize: 18,
-    color: "gray",
+    fontSize: 50,
+    color: "#1e222b",
+    fontFamily: theme.textVariants.regular,
     marginBottom: 8,
+    paddingHorizontal: 16,
+
   },
   rating: {
     fontSize: 16,
@@ -161,9 +203,12 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   price: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginTop: 16,
+    fontSize: theme.textVariants.s,
+    fontFamily: theme.textVariants.bold,
+    color: theme.colors.primary,
+    marginTop: 26,
+    paddingHorizontal: 16,
+
   },
   discount: {
     fontSize: 16,
@@ -171,12 +216,32 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   description: {
-    fontSize: 16,
-    marginTop: 16,
+    marginTop: 6,
+    fontSize: theme.textVariants.s,
+    fontFamily: theme.textVariants.regular,
+    color: "#8891A5",
+    paddingHorizontal: 16,
+
   },
   buttonContainer: {
     flexDirection: "row",
     gap: 23,
+    marginTop: 30,
+    paddingHorizontal: 16,
+
+  },
+  detail: {
+    marginTop: 30,
+    fontSize: theme.textVariants.s,
+    fontFamily: theme.textVariants.regular,
+    color: "#1e222b",
+    paddingHorizontal: 16,
+
+  },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

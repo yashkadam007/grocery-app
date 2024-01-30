@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { theme } from '../themes/theme';
 
 const ProductCard = ({ id, imageUrl, price, name }) => {
     const navigation = useNavigation();
+    const windowWidth = useWindowDimensions().width;
+    const cardWidth = (windowWidth - 55) / 2;
 
   const handleCardPress = () => {
     // Navigate to ProductDetailScreen with the product ID
@@ -11,9 +14,9 @@ const ProductCard = ({ id, imageUrl, price, name }) => {
   };
   return (
     <TouchableOpacity onPress={handleCardPress}>
-      <View style={styles.card}>
+      <View style={[styles.card, { width: cardWidth }]}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
-        <Text style={styles.price}>Price: ${price}</Text>
+        <Text style={styles.price}>${price}</Text>
         <Text style={styles.name}>{name}</Text>
       </View>
     </TouchableOpacity>
@@ -22,29 +25,29 @@ const ProductCard = ({ id, imageUrl, price, name }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.black1,
     borderRadius: 12,
     overflow: 'hidden',
-    elevation: 2,
     marginBottom: 20,
-    width: '45%',
+    marginRight:15,
     height: 194,
   },
   image: {
     width: '100%',
-    height: '60%', // Adjust the height based on your design
+    height: '65%', // Adjust the height based on your design
     resizeMode: 'cover',
   },
   price: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: theme.textVariants.xs,
+    fontFamily: theme.textVariants.semiBold,
     marginTop: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 17,
   },
   name: {
-    fontSize: 16,
-    marginVertical: 10,
-    paddingHorizontal: 10,
+    fontSize: theme.textVariants.xxs,
+    fontFamily: theme.textVariants.regular,
+    marginVertical: 4,
+    paddingHorizontal: 17,
   },
 });
 

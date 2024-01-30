@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     //justifyContent: 'space-between',
-    backgroundColor: theme.colors.background,
+    backgroundColor: '#FFFFFF',
   },
   name: {
     color: theme.colors.black1,
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
   },
   horizontalScroll: {},
   productGrid: {
+    flex:1,
     marginHorizontal: 20,
   },
 });
