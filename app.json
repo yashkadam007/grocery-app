@@ -21,10 +21,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.ricksanchezc181.groceryapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1725a52f-2074-4d0e-8707-905c05008410"
+      }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

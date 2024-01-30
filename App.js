@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import StackNavigator from "./navigation/StackNavigator";
+import { useFonts } from "expo-font";
+import { Provider } from "react-redux";
+import store from "./redux/store/Store";
 
 export default function App() {
+  const [isLoaded] = useFonts({
+    "manrope-regular": require("./assets/fonts/Manrope-Regular.ttf"),
+    "manrope-medium": require("./assets/fonts/Manrope-Medium.ttf"),
+    "manrope-semibold": require("./assets/fonts/Manrope-SemiBold.ttf"),
+    "manrope-bold": require("./assets/fonts/Manrope-Bold.ttf"),
+  });
+  if (!isLoaded) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <Provider store={store}>
+        <StackNavigator />
+      </Provider>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
