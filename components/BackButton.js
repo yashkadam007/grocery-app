@@ -1,4 +1,3 @@
-// components/BackButton.js
 import React from 'react';
 import { Button, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';

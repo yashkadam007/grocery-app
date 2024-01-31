@@ -1,7 +1,6 @@
-// DeliveryDetails.js
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { theme } from '../themes/theme';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { theme } from "../themes/theme";
 
 const DeliveryDetails = () => {
   return (
@@ -21,19 +20,18 @@ const DeliveryDetails = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 29,
-    marginBottom:12,
-    flexDirection:'row',
-    justifyContent: 'space-between',
+    marginBottom: 12,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   detailsContainer: {
-    gap:4,
+    gap: 4,
   },
   label: {
     fontSize: 11,
     fontFamily: theme.textVariants.bold,
-    //fontWeight: 'bold',
     color: theme.colors.black1,
-    opacity:0.5,
+    opacity: 0.5,
   },
   detail: {
     fontSize: theme.textVariants.xs,

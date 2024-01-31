@@ -1,4 +1,9 @@
-import { ADD_TO_CART, INCREASE_QUANTITY, DECREASE_QUANTITY, REMOVE_FROM_CART } from '../ActionTypes';
+import {
+  ADD_TO_CART,
+  INCREASE_QUANTITY,
+  DECREASE_QUANTITY,
+  REMOVE_FROM_CART,
+} from "../ActionTypes";
 
 export const addToCart = (item) => ({
   type: ADD_TO_CART,
@@ -37,16 +42,14 @@ export const decreaseQuantity = (productId) => {
     });
 
     // Dispatch the updated cart items
-    // You may want to update your reducer to handle this action
     dispatch({
-      type: 'UPDATE_CART_ITEMS',
+      type: "UPDATE_CART_ITEMS",
       payload: updatedCartItems,
     });
 
     return updatedCartItems;
   };
 };
-
 
 export const removeFromCart = (productId) => ({
   type: REMOVE_FROM_CART,

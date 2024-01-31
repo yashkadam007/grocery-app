@@ -61,7 +61,7 @@ const ShoppingCartScreen = ({
     <SafeAreaView style={[styles.container, SafeViewAndroid.AndroidSafeArea]}>
       <View style={styles.backAndCart}>
         <BackButton />
-        <Text style={styles.shoppingCartText}>Shopping Cart</Text>
+        <Text style={styles.shoppingCartText}>Shopping Cart ({cartItems.length})</Text>
       </View>
       <FlatList
         data={cartItems}

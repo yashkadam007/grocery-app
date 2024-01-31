@@ -1,11 +1,11 @@
-// store.js
-import { createStore, combineReducers,applyMiddleware } from 'redux';
-import cartReducer from '../reducer/Reducers';
-import { thunk } from 'redux-thunk';
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import cartReducer from "../reducer/Reducers";
+import  {thunk} from "redux-thunk";
+import favoriteReducer from "../reducer/FavouriteReducers";
 
 const rootReducer = combineReducers({
   cart: cartReducer,
-  // Add other reducers if any
+  favorite: favoriteReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

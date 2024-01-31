@@ -11,15 +11,27 @@ const StackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="BottomTabNavigator">
-         <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} options={{  
-         headerShown: false,
-        }}/>
-        <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen} options={{  
-         headerShown: false,
-        }}/>
-         <Stack.Screen name="ShoppingCartScreen" component={ShoppingCartScreen} options={{  
-         headerShown: false,
-        }}/>
+        <Stack.Screen
+          name="BottomTabNavigator"
+          component={BottomTabNavigator}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ProductDetailScreen"
+          component={ProductDetailScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="ShoppingCartScreen"
+          component={ShoppingCartScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

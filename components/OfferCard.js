@@ -1,17 +1,18 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import ImageIcon from '../assets/images/ImageIcon.svg';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import ImageIcon from "../assets/images/ImageIcon.svg";
+import { theme } from "../themes/theme";
 
-const OfferCard = ( {cardColor} ) => {
+const OfferCard = ({ cardColor }) => {
   return (
     <View style={[styles.card, { backgroundColor: cardColor }]}>
       <View>
-        <ImageIcon/>
+        <ImageIcon />
       </View>
-      <View>
-         <Text style={styles.cardText}>Get </Text>
-         <Text> 50% off</Text>
-         <Text>on first three orders</Text>
+      <View style={{ marginLeft: 30 }}>
+        <Text style={styles.getText}>Get</Text>
+        <Text style={styles.saleText}>50% off</Text>
+        <Text style={styles.onOrderText}>on first three orders</Text>
       </View>
     </View>
   );
@@ -19,21 +20,33 @@ const OfferCard = ( {cardColor} ) => {
 
 const styles = StyleSheet.create({
   card: {
-    flex:1,
-    flexDirection:'row',
-    backgroundColor: '#f0f0f0',
+    flex: 1,
+    flexDirection: "row",
+    backgroundColor: "#f0f0f0",
     padding: 20,
     borderRadius: 16,
     marginRight: 18,
-    alignItems: 'center',
+    alignItems: "center",
     width: 269,
     height: 123,
   },
-  cardText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#333',
+  getText: {
+    fontSize: theme.textVariants.l,
+    fontFamily: theme.textVariants.regular,
+    textAlign: "left",
+    color: "#FFF",
+  },
+  saleText: {
+    fontSize: 26,
+    fontFamily: theme.textVariants.bold,
+    textAlign: "left",
+    color: "#FFF",
+  },
+  onOrderText: {
+    fontSize: 13,
+    fontFamily: theme.textVariants.regular,
+    textAlign: "left",
+    color: "#FFF",
   },
 });
 

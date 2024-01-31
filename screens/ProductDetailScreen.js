@@ -5,7 +5,6 @@ import {
   Image,
   ScrollView,
   StyleSheet,
-  FlatList,
   SafeAreaView,
   Dimensions,
 } from "react-native";
@@ -18,9 +17,9 @@ import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/action/Actions";
 import Carousel, { Pagination } from "react-native-snap-carousel";
+import AddToFavourite from "../components/AddToFavourite";
 
-
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 const ProductDetailScreen = ({ route, cartItems }) => {
   const { productId } = route.params;
@@ -29,7 +28,12 @@ const ProductDetailScreen = ({ route, cartItems }) => {
   const [activeSlide, setActiveSlide] = useState(0);
 
   const renderImageItem = ({ item }) => (
-    <Image source={{ uri: item }} style={{ width, height: 200, resizeMode: 'cover' }} />
+    <View>
+      <Image
+        source={{ uri: item }}
+        style={{ width, height: 200, resizeMode: "cover" }}
+      />
+    </View>
   );
 
   const handleAddToCart = () => {
@@ -60,7 +64,7 @@ const ProductDetailScreen = ({ route, cartItems }) => {
   }, [productId]);
 
   if (!productDetails) {
-    // Loading state or error handling can be added here
+    // Loading state
     return <Text style={styles.loading}>Loading...</Text>;
   }
 
@@ -74,40 +78,34 @@ const ProductDetailScreen = ({ route, cartItems }) => {
       <ScrollView style={styles.container}>
         <Text style={styles.brand}>{productDetails.brand}</Text>
         <Text style={styles.title}>{productDetails.title}</Text>
-        {/* <Text style={styles.rating}>Rating: {productDetails.rating}</Text> */}
-        {/* <FlatList
-          data={productDetails.images}
-          keyExtractor={(item, index) => index.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <Image source={{ uri: item }} style={styles.image} />
-          )}
-        /> */}
+
         <View>
-      <Carousel
-        data={productDetails.images}
-        renderItem={renderImageItem}
-        sliderWidth={width}
-        itemWidth={width}
-        onSnapToItem={(index) => setActiveSlide(index)}
-      />
-      <Pagination
-        dotsLength={productDetails.images.length}
-        activeDotIndex={activeSlide}
-        containerStyle={{ position: 'absolute', bottom: -15 }}
-        dotStyle={{
-          width: 21,
-          height: 4,
-          borderRadius: 5,
-          marginHorizontal: 1,
-          backgroundColor: theme.colors.secondaryDark,
-        }}
-        inactiveDotOpacity={0.4}
-        inactiveDotScale={1}
-        inactiveDotStyle={{ backgroundColor: '#E4E4E4'}}
-      />
-    </View>
+          <Carousel
+            data={productDetails.images}
+            renderItem={renderImageItem}
+            sliderWidth={width}
+            itemWidth={width}
+            onSnapToItem={(index) => setActiveSlide(index)}
+          />
+          <Pagination
+            dotsLength={productDetails.images.length}
+            activeDotIndex={activeSlide}
+            containerStyle={{ position: "absolute", bottom: -15 }}
+            dotStyle={{
+              width: 21,
+              height: 4,
+              borderRadius: 5,
+              marginHorizontal: 1,
+              backgroundColor: theme.colors.secondaryDark,
+            }}
+            inactiveDotOpacity={0.4}
+            inactiveDotScale={1}
+            inactiveDotStyle={{ backgroundColor: "#E4E4E4" }}
+          />
+          <View style={styles.favoriteContainer}>
+            <AddToFavourite productId={productId} />
+          </View>
+        </View>
 
         <Text style={styles.price}>${productDetails.price}</Text>
         <View style={styles.buttonContainer}>
@@ -190,7 +188,6 @@ const styles = StyleSheet.create({
     fontFamily: theme.textVariants.regular,
     marginBottom: 8,
     paddingHorizontal: 16,
-
   },
   rating: {
     fontSize: 16,
@@ -208,7 +205,6 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     marginTop: 26,
     paddingHorizontal: 16,
-
   },
   discount: {
     fontSize: 16,
@@ -221,14 +217,12 @@ const styles = StyleSheet.create({
     fontFamily: theme.textVariants.regular,
     color: "#8891A5",
     paddingHorizontal: 16,
-
   },
   buttonContainer: {
     flexDirection: "row",
     gap: 23,
     marginTop: 30,
     paddingHorizontal: 16,
-
   },
   detail: {
     marginTop: 30,
@@ -236,12 +230,17 @@ const styles = StyleSheet.create({
     fontFamily: theme.textVariants.regular,
     color: "#1e222b",
     paddingHorizontal: 16,
-
   },
   loading: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  favoriteContainer: {
+    position: "absolute",
+    top: 20,
+    right: 30,
+    zIndex: 1,
   },
 });
 
